@@ -1,0 +1,7 @@
+
+.leftSide{
+    background-color: yellow;
+
+    box-shadow: 5px 0px 10px var(--color-shadow);
+
+}

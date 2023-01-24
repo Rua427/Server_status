@@ -1,0 +1,18 @@
+
+.header{
+    display:grid;
+    grid-template-columns: 20rem 130rem;
+
+    height:10rem;
+}
+
+.title{
+    background:var(--color-primary);
+
+    text-align: center;
+}
+
+.top{
+    background:var(--color-primary);
+
+}

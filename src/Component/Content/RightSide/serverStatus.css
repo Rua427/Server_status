@@ -1,0 +1,7 @@
+
+.serverStatus{
+    background-color: orange;
+
+    box-shadow: -5px 0px 5px var(--color-shadow);
+
+}
