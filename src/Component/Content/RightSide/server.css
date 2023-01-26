@@ -1,10 +1,10 @@
 
 .server{
-    width: 10rem;
-    height:10rem;
+    width: .5rem;
+    height:.5rem;
 
-    border-radius: 25%;
-    box-shadow:5px 5px 5px 5px var(--color-shadow);
+    border-radius: 50%;
+    box-shadow:2px 2px 15px 3px var(--color-success);
 }
 
 .serverStat{
@@ -15,12 +15,11 @@
     justify-content: center;
     align-items: center;
 
-    font-size:2rem;
+    font-size:.1rem;
     color:green;
 }
 .serverIP{
-
     position: relative;
     top:-1rem;
-    font-size:.8rem;
+    font-size:9px;
 }

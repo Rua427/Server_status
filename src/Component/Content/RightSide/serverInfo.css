@@ -1,11 +1,10 @@
 .serverInfo{
 
     display:grid;
-    grid-template-columns: repeat(6, 15rem);
-    grid-auto-rows: 15rem;
+    grid-template-columns: repeat(15, 3rem);
+    grid-auto-rows: 3rem;
     place-items:center;
 
     overflow:scroll;
 
-    box-shadow: 5px 0px 20px var(--color-shadow);
 }

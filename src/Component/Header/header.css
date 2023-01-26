@@ -1,7 +1,7 @@
 
 .header{
     display:grid;
-    grid-template-columns: 20rem 130rem;
+    grid-template-columns: 10rem 65rem;
 
     height:10rem;
 }
