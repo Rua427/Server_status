@@ -19,6 +19,15 @@
     --sticky-top-left:5.4rem;
     --sticky-top-right:5.4rem;
 }
+
+
+body{
+    font-family: 'Poppins', sans-serif;
+    color:var(--color-dark);
+    background: var(--color-light);
+    overflow-x:hidden;
+}
+
 *, *::before, *::after{
     margin:0;
     padding:0;
@@ -27,13 +36,4 @@
     text-decoration:none;
     list-style:none;
     border:none;
-}
-
-body{
-    font-family: 'Poppins', sans-serif;
-    color:var(--color-dark);
-    background: var(--color-light);
-    overflow-x:hidden;
-
-
 }
