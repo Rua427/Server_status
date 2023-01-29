@@ -16,6 +16,9 @@
     --search-padding:0.6rem 1rem;
     --card-padding:1rem;
 
+    --purple:linear-gradient(180deg, #bb67ff 0%, #c484f3 100%);
+    --yellow:linear-gradient(180deg, #f8d49a -146.42%, #fad79d 46%);
+
     --sticky-top-left:5.4rem;
     --sticky-top-right:5.4rem;
 }
@@ -36,4 +39,9 @@ body{
     text-decoration:none;
     list-style:none;
     border:none;
+}
+
+.blur{
+    filter:blur(5px);
+    -webkit-filter:blur(5px);
 }

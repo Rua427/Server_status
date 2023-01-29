@@ -4,7 +4,7 @@ import './server.css'
 const Server = () => {
   return (
     <div className='server'>
-        
+        <span></span>
     </div>
   )
 }

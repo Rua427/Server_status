@@ -1,7 +1,4 @@
 .rightSide{
-    display:grid;
+    display:flex;
     height:90vh;
-
-    grid-template-columns: 45rem 20rem;
-    
 }

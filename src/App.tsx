@@ -8,6 +8,7 @@ import Navigation from './Component/Navigation/NaviagationTemplate/Navigation';
 function App() {
   return (
     <div className="App">
+      <div className="blur"></div>
       <Navigation/>
       <Main/>
     </div>

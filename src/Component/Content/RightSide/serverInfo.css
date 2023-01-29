@@ -1,7 +1,7 @@
 .serverInfo{
 
     display:grid;
-    grid-template-columns: repeat(15, 3rem);
+    grid-template-columns: repeat(23, 3rem);
     grid-auto-rows: 3rem;
     place-items:center;
 

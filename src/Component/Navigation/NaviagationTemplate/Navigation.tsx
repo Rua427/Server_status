@@ -8,10 +8,14 @@ import {HiServerStack} from 'react-icons/hi2';
 import {HiOutlineServerStack} from 'react-icons/hi2';
 import {HiDotsHorizontal} from 'react-icons/hi';
 import {HiServer} from 'react-icons/hi2';
+import { FiChevronLeft } from 'react-icons/fi';
 
 const Navigation = () => {
   return (
     <div className='navigation'>
+      <div className="menu">
+        <FiChevronLeft className='menu-icon'/>
+      </div>
       <header>
         <div className="profile">
           <SiSamsung/>

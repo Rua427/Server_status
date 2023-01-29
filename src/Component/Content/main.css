@@ -1,7 +1,0 @@
-.main{
-    display:grid;
-
-    grid-template-columns: 10rem 65rem;
-
-    text-align: center;
-}
