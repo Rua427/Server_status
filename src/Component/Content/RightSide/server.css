@@ -1,7 +1,7 @@
 
 .server{
-    width:2.5rem;
-    height:2.5rem;
+    width:3rem;
+    height:3rem;
 
     display: flex;
     justify-content: center;
@@ -12,16 +12,40 @@
 .server span{
     border-radius: 50%;
     box-shadow:0px 0px 15px 2px var(--color-success);
-    width:.75rem;
-    height:.75rem;
 
     background-color: lightgreen;
 }
 .serverStat{
-    
-
     font-size:.1rem;
     color:green;
+
+    border-radius: 50%;
+    width:2rem;
+    height:2rem;
+    cursor:pointer;
+}
+.serverStat.good{
+    box-shadow:0px 0px 15px 2px var(--color-success);
+    background-color: lightgreen;
+    width:.75rem;
+    height:.75rem;
+
+    border-radius: 50%;
+}
+.serverStat.warning{
+    box-shadow:0px 0px 15px 2px yellow;
+    background-color: yellow;
+    width:.75rem;
+    height:.75rem;
+
+    border-radius: 50%;
+}
+.serverStat.bad{
+    box-shadow:0px 0px 15px 2px lightcoral;
+    background-color: lightcoral;
+    width:.75rem;
+    height:.75rem;
+    border-radius: 50%;
 }
 .serverIP{
     position: relative;

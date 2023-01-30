@@ -12,25 +12,25 @@ import { FiChevronLeft } from 'react-icons/fi';
 
 const Navigation = () => {
   return (
-    <div className='navigation'>
-      <div className="menu">
-        <FiChevronLeft className='menu-icon'/>
-      </div>
-      <header>
-        <div className="profile">
-          <SiSamsung/>
-          <span>Global Manufacture Support</span>
+      <div className='navigation'>
+        <div className="menu">
+          <FiChevronLeft className='menu-icon'/>
         </div>
-      </header>
+        <header>
+          <div className="profile">
+            <SiSamsung/>
+            <span>Global Manufacture Support</span>
+          </div>
+        </header>
 
-      <Nav Icon={TbDashboard} title={"Dashboard"} />
-      <Nav Icon={AiOutlineDatabase} title={"DB"} />
-      <Nav Icon={HiServerStack} title={"USM"} />
-      <Nav Icon={HiOutlineServerStack} title={"LSM"} />
-      <Nav Icon={HiServer} title={"vDU"} />
-      <Nav Icon={HiDotsHorizontal} title={"ETC"} />
+        <Nav Icon={TbDashboard} title={"Dashboard"} />
+        <Nav Icon={AiOutlineDatabase} title={"DB"} />
+        <Nav Icon={HiServerStack} title={"USM"} />
+        <Nav Icon={HiOutlineServerStack} title={"LSM"} />
+        <Nav Icon={HiServer} title={"vDU"} />
+        <Nav Icon={HiDotsHorizontal} title={"ETC"} />
 
-    </div>
+      </div>
   )
 }
 

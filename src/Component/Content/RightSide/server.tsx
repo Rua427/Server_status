@@ -1,10 +1,22 @@
 import React from 'react'
 import './server.css'
 
-const Server = () => {
+interface props{
+  status: number;
+}
+const Server = ({status}: props) => {
+
+  const className= [
+    "serverStat",
+    status === 0 && "good",
+    status === 1 && "warning",
+    status === 2 && "bad",
+  ].filter(Boolean).join(' ');
   return (
     <div className='server'>
-        <span></span>
+        <span className={`${className}`}>
+
+        </span>
     </div>
   )
 }

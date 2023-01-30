@@ -1,0 +1,10 @@
+.serverHeader{
+    width:calc(100vw - 19rem);
+    height:5rem;
+    margin:1rem 0;
+}
+
+.serverHeader h1{
+
+    font-size:70px;
+}
