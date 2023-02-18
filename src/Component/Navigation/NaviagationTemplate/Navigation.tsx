@@ -24,7 +24,7 @@ const Navigation = () => {
         </header>
 
         <Nav Icon={TbDashboard} title={"Dashboard"} />
-        <Nav Icon={AiOutlineDatabase} title={"DB"} />
+        <Nav Icon={AiOutlineDatabase} title={"Database"} />
         <Nav Icon={HiServerStack} title={"USM"} />
         <Nav Icon={HiOutlineServerStack} title={"LSM"} />
         <Nav Icon={HiServer} title={"vDU"} />
