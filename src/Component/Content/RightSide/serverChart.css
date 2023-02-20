@@ -1,3 +1,9 @@
-.serverChart{
-    height:40vh;
+.serverHeader{
+    height:3rem;
+    margin:1rem 0;
+}
+
+.serverHeader h1{
+
+    font-size:40px;
 }
