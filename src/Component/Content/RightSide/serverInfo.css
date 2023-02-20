@@ -7,4 +7,6 @@
     height:calc(60vh - 8rem);
     overflow:scroll;
     margin-bottom:1rem;
+    
+    overflow-x: hidden;
 }
