@@ -9,8 +9,10 @@ function App() {
   return (
     <div className="App">
       <div className="blur"></div>
-      <Navigation/>
-      <Main/>
+      <div className="form">
+        <Navigation/>
+        <Main/>
+      </div>
     </div>
   );
 }
