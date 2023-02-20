@@ -1,7 +1,7 @@
 
 import React from 'react'
 import './rightSide.css'
-import ServerChart from './serverChart'
+import ServerChart from './server_chart/serverChart'
 import ServerHeader from './serverHeader'
 import ServerInfo from './ServerInfo'
 import ServerStatus from './ServerStatus'
