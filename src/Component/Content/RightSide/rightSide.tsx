@@ -2,9 +2,8 @@
 import React from 'react'
 import './rightSide.css'
 import ServerChart from './server_chart/serverChart'
-import ServerHeader from './serverHeader'
+import ServerHeader from './Alarm/serverHeader'
 import ServerInfo from './ServerInfo'
-import ServerStatus from './ServerStatus'
 const RightSide = () => {
   return (
     <div className='rightSide'>
