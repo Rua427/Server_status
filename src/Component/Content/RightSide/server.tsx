@@ -3,6 +3,7 @@ import './server.css'
 
 interface props{
   status: number;
+
 }
 const Server = ({status}: props) => {
 
@@ -17,6 +18,11 @@ const Server = ({status}: props) => {
         <span className={`${className}`}>
 
         </span>
+
+        <div 
+          className="server_status"
+        >
+        </div>
     </div>
   )
 }
