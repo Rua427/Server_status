@@ -4,10 +4,10 @@ import './serverChart.css'
 const ServerChart = () => {
   return (
     <div className='serverChart'>
-      <ChartTemplate/>
-      <ChartTemplate/>
-      <ChartTemplate/>
-      <ChartTemplate/>
+      <ChartTemplate serverName="vDU"/>
+      <ChartTemplate serverName="Database"/>
+      <ChartTemplate serverName="USM"/>
+      <ChartTemplate serverName="LSM"/>
     </div>
   )
 }
