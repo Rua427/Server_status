@@ -1,0 +1,44 @@
+.serverHeader{
+    height:2rem;
+    margin:1rem 0;
+    position:relative;
+}
+
+.serverHeader h1{
+
+    font-size:40px;
+}
+
+.serverHeader .alarm{
+    right:10px;
+    top:0;
+    position:absolute;
+    width:35px;
+    height:35px;
+
+    cursor:pointer;
+}
+.serverHeader .alarm .alarm_status{
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:.75rem;
+    height:.75rem;
+
+    border-radius: 25px;
+    border: 1px solid black;
+}
+
+.serverHeader .alarm .alarm_status.alarmIsTrue{
+    background-color:rgb(255, 32, 32);
+}
+.serverHeader .alarm .alarm_status.alarmIsFalse{
+    background-color:rgb(73, 73, 73);
+}
+.serverHeader .alarm #alarm_font{
+    text-align: center;
+    font-size:30px;
+    color:white;
+}
