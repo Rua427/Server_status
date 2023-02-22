@@ -4,7 +4,7 @@
     grid-auto-rows: 2.5rem;
     place-items:center;
     width:100%;
-    height:calc(60vh - 3rem);
+    height:100%;
     overflow:scroll;
     margin-bottom:1rem;
     
