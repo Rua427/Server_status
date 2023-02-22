@@ -8,6 +8,8 @@
     align-items: center;
     
     cursor:pointer;
+
+    position:relative;
 }
 
 .serverStat{
