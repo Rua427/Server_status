@@ -1,6 +1,4 @@
 .serverChart{
-    height:35rem;
-
     margin-bottom:1rem;
     display:grid;
 
@@ -10,5 +8,4 @@
 
     overflow:scroll;
     overflow-x:hidden;
-
 }
