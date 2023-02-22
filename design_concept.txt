@@ -35,3 +35,9 @@ Dashboard
 데이터는 excel로 export하며 모든 서버의 상태를 담아야한다. (지난주 정보, 이번 주 정보)
 
 
+hover
+    1. 서버 이름
+    2. 서버 ip정보
+    3. 현재 상태를 출력한다.
+        1. Good, Warning, Bad, disconnect
+        2. Good이외에는 해당 항목의 대한 사유를 적는다.
