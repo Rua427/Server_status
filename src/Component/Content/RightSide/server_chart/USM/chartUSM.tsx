@@ -1,6 +1,8 @@
 import React from 'react'
 import ChartTemplate from '../chartTemplate'
 import './chartUSM.css'
+
+
 const ChartUSM = () => {
   return (
     <div className='chartUSM'>

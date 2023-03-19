@@ -9,6 +9,13 @@
     cursor:pointer;
     transition:background-color .2s ease;
     text-align: right;
+
+}
+
+.nav.selection{
+    background-color:rgba(240,240,240,1);
+    color:black;
+
 }
 
 .nav:hover{
