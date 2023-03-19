@@ -1,5 +1,5 @@
 .chartTemplate{
-    background-color:white;
+    background-color:rgba(0, 0, 0, 0.1);
 
     border-radius: 10px;
     width:100%;
@@ -8,4 +8,5 @@
 
 .chartTemplate h2{
     text-align: center;
+    color:white;
 }

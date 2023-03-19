@@ -45,13 +45,13 @@ export const data = {
         label: '# of Count',
         data: [Math.random() * 20, Math.random() * 20,Math.random() * 20,Math.random() * 20],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.5)',
-          'rgba(54, 162, 235, 0.5)',
-          'rgba(255, 206, 86, 0.5)',
-          'rgba(75, 192, 192, 0.5)',
+          'rgba(60, 179, 113, 0.9)',
+          'rgba(246, 187, 67, 0.9)',
+          'rgba(219, 68, 85, 0.9)',
+          'rgba(100, 100, 100, 0.9)',
         ],
         borderWidth: 2,
-        borderColor: 'rgba(120,120,120,1)',
+        borderColor: 'rgba(255,255,255,0.4)',
       },
     ],
 };
