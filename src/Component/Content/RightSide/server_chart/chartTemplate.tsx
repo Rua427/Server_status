@@ -61,14 +61,14 @@ const Container = styled.div`
 
 
 interface Props{
-  serverName: string,
+  statusName: string,
 
 }
 
 const ChartTemplate = (props :Props )  => {
   return (
     <div className='chartTemplate'>
-        <h2>{props.serverName} Status</h2>
+        <h2>{props.statusName} Status</h2>
         <Container>
           <Doughnut data={data} options={options}  style={{position:"relative"}}/>
         </Container>
