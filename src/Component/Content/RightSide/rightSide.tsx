@@ -23,7 +23,7 @@ const RightSide = () => {
           <div className={`${value === "LSM" ? "": "disable"}`}><ChartLSM/></div>
           <div className={`${value === "Database" ? "": "disable"}`}><ChartDB/></div>
           <div className={`${value === "ETC" ? "": "disable"}`}><ChartETC/></div>
-          <div className={`${value === "Dashboard" ? "": "disable"}`}><ServerInfo/></div>
+          <div><ServerInfo/></div>
           {/* <ServerStatus/> */}
         </div>  
       )}

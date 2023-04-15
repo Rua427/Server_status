@@ -3,6 +3,12 @@ import Server from './server';
 import {Tooltip} from 'react-tooltip'
 import './serverInfo.css'
 import 'react-tooltip/dist/react-tooltip.css';
+
+interface Props{
+  serverCount : number,
+}
+
+
 const ServerInfo = () => {
     let s: any = [];
 
