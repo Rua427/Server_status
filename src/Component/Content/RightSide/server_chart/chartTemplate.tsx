@@ -38,7 +38,17 @@ export const options={
     padding:20
   }
 }
-export const data = {
+const Container = styled.div`
+  height:220px;
+`;
+
+
+interface Props{
+  statusName: string,
+}
+
+const ChartTemplate = (props :Props )  => {
+  const data = {
     labels: ['Good', 'Warning', 'Bad', 'Disconnect'],
     datasets: [
       {
@@ -54,18 +64,7 @@ export const data = {
         borderColor: 'rgba(255,255,255,0.4)',
       },
     ],
-};
-const Container = styled.div`
-  height:220px;
-`;
-
-
-interface Props{
-  statusName: string,
-
-}
-
-const ChartTemplate = (props :Props )  => {
+  };
   return (
     <div className='chartTemplate'>
         <h2>{props.statusName} Status</h2>
