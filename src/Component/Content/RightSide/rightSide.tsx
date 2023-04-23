@@ -15,7 +15,8 @@ import { json } from 'stream/consumers'
 
 const RightSide = () => {
   let servers: {[key: string]: number} = { };
-
+  
+  // data 배열 인덱싱으로 mysql table내 column을 이용
   const [data, setDatas] = useState<any>(null);
   const [error, setError] = useState<any>(null);
   const getDatas = async () =>{
@@ -30,10 +31,14 @@ const RightSide = () => {
       setError("");
       setDatas(null);
 
+      // 해당 response로 서버 개수 
       const response = await axios.get(
         'api/data'
       );
 
+      // 서버 테스트 결과 
+
+      
       setDatas(response.data);
     }
     catch(e){

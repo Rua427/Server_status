@@ -10,6 +10,7 @@ interface Props{
 }
 
 
+// 여기에서 서버 정보 결과를 넣어준다.
 const ServerInfo = (props: Props) => {
     let s: any = [];
 
