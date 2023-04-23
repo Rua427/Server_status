@@ -45,6 +45,11 @@ const Container = styled.div`
 
 interface Props{
   statusName: string,
+
+  good: number,
+  warning: number,
+  bad: number,
+  disconnect: number, 
 }
 
 const ChartTemplate = (props :Props )  => {
@@ -53,7 +58,7 @@ const ChartTemplate = (props :Props )  => {
     datasets: [
       {
         label: '# of Count',
-        data: [Math.random() * 20, Math.random() * 20,Math.random() * 20,Math.random() * 20],
+        data: [props.good, props.warning, props.bad, props.disconnect],
         backgroundColor: [
           'rgba(60, 179, 113, 0.9)',
           'rgba(246, 187, 67, 0.9)',
