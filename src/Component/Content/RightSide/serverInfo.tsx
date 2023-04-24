@@ -5,7 +5,7 @@ import './serverInfo.css'
 import 'react-tooltip/dist/react-tooltip.css';
 
 interface Props{
-  serverCount : {[key: string]: number};
+  serverCount: ServerList[]; 
   server : string;
 }
 
@@ -19,31 +19,10 @@ const ServerInfo = (props: Props) => {
     useEffect(() => {
       setServer(props);
     }, [props])
-
+      
     if(props.server === "Dashboard" && serverData !== undefined){
-      for(var key in serverData.serverCount){
-        for(let x = 0; x < serverData.serverCount[key]; x++){
-
-            const r = Math.floor(Math.random() * 100);
-            let num = 0;
-            if(r >= 99){
-              num = 2;
-            }
-
-            else if(r >= 92){
-              num = 1
-            }
-            else{
-              num = 0;
-            }
-
-            s = s.concat(<a data-tooltip-id="my-tooltip" ><Server key={`${key}, ${x}`} status={num}/></a>)
-        }
-      }
-    }
-    else{
-      for(let x = 0; x < props.serverCount[props.server]; x++){
-
+      var serverCount = 0;
+      props.serverCount.map((res) => {
         const r = Math.floor(Math.random() * 100);
         let num = 0;
         if(r >= 99){
@@ -56,10 +35,28 @@ const ServerInfo = (props: Props) => {
         else{
           num = 0;
         }
-
-        s = s.concat(<a data-tooltip-id="my-tooltip" ><Server key={`${props.server},${x}`} status={num}/></a>)
-        
-      }
+        s = s.concat(<a data-tooltip-id="my-tooltip" ><Server key={`${res.IP},${res.server_name}`} status={num}/></a>)
+      })
+    }
+    else{
+      props.serverCount.map((res) => {
+        if(res.server_category === props.server){
+          const r = Math.floor(Math.random() * 100);
+          let num = 0;
+          if(r >= 99){
+            num = 2;
+          }
+  
+          else if(r >= 92){
+            num = 1
+          }
+          else{
+            num = 0;
+          }
+  
+          s = s.concat(<a data-tooltip-id="my-tooltip" ><Server key={`${res.IP},${res.server_name}`} status={num}/></a>)
+        }
+      })
     }
     
 
