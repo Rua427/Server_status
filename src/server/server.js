@@ -26,6 +26,7 @@ db.connect(function(err){
 })
 
 // develop API
+// 서버 정보 파싱
 app.get("/api/data", (req, res) => {
 
      res.header("Access-Control-Allow-Origin", "*");
@@ -33,10 +34,24 @@ app.get("/api/data", (req, res) => {
      const sqlQuery = "SELECT * FROM server_status.server_info";
      db.query(sqlQuery, (err, result, fields) =>{
          res.send(result);
-         console.log(result[1])
      })
 })
 
+// 특정 서버 결과 값 파싱
+app.get("/api/server_info_result/:category/:year/:week", (req, res) => {
+    const category = req.params.category;
+    const year = req.params.year;
+    const week = req.params.week;
+
+    res.header("Access-Control-Allow-Origin", "*");
+    console.log("get data");
+    const sqlQuery = "SELECT * FROM server_status.server_status_result where `server_category`='" + category + "' and `Year`='" + year + "' and `Week`='" + week + "'";
+    db.query(sqlQuery, (err, result, fields) =>{
+        res.send(result);
+    })
+})
+
+// 모든 서버 결과 값 파싱
 app.get("/api/server_info_result", (req, res) => {
 
     res.header("Access-Control-Allow-Origin", "*");
@@ -44,7 +59,6 @@ app.get("/api/server_info_result", (req, res) => {
     const sqlQuery = "SELECT * FROM server_status.server_status_result";
     db.query(sqlQuery, (err, result, fields) =>{
         res.send(result);
-        console.log(result[0])
     })
 })
 app.get("/data", (req, res) => {
