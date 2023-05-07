@@ -3,6 +3,7 @@ import Server from './server';
 import {Tooltip} from 'react-tooltip'
 import './serverInfo.css'
 import 'react-tooltip/dist/react-tooltip.css';
+import type {ServerList } from '../../../DBType' 
 
 interface Props{
   serverCount: ServerList[]; 
