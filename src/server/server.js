@@ -2,12 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql");
 const app = express();
-const port = 3301;
+const port = 3306;
 
 const db = mysql. createConnection({
-    host:"111.1.1.1",
-    user:"11",
-    password:"",
+    host:"192.168.0.105",
+    user:"cdma",
+    password:"dl022548",
     database:"server_status",
 });
 
@@ -51,16 +51,35 @@ app.get("/api/server_info_result/:category/:year/:week", (req, res) => {
     })
 })
 
-// 모든 서버 결과 값 파싱
-app.get("/api/server_info_result", (req, res) => {
+// 특정 서버의 최근 결과 값 파싱
+app.get("/api/server_info_result/:category/", (req, res) => {
+    const category = req.params.category;
+    const year = req.params.year;
+    const week = req.params.week;
 
     res.header("Access-Control-Allow-Origin", "*");
     console.log("get data");
-    const sqlQuery = "SELECT * FROM server_status.server_status_result";
+    const sqlQuery = "SELECT * FROM server_status.server_status_result a join server_status.server_status_result b on (a.IP = b.IP)" + 
+    "where a.`server_category`='" + category + "' and a.Week = (SELECT MAX(b.Week) from server_status.server_status_result b) and " + 
+    "a.Year = (SELECT MAX(b.Year) from server_status.server_status_result b)" ;
     db.query(sqlQuery, (err, result, fields) =>{
         res.send(result);
     })
 })
+
+// 모든 서버의 최근 결과 값 파싱
+app.get("/api/server_info_result", (req, res) => {
+
+    res.header("Access-Control-Allow-Origin", "*");
+    console.log("get data");
+    const sqlQuery = "SELECT * FROM server_status.server_status_result a join server_status.server_status_result b on (a.IP = b.IP)" + 
+    "where a.Week = (SELECT MAX(b.Week) from server_status.server_status_result b) and " + 
+    "a.Year = (SELECT MAX(b.Year) from server_status.server_status_result b)" ;
+    db.query(sqlQuery, (err, result, fields) =>{
+        res.send(result);
+    })
+})
+
 app.get("/data", (req, res) => {
     res.send('GET request to the homepage');
 })

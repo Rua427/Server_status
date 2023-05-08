@@ -8,7 +8,7 @@ import ChartServers from './server_chart/chartServers'
 import SideSelection from '../../../Context'
 import axios from 'axios';
 import { json } from 'stream/consumers'
-import type {ServerList } from '../../../DBType' 
+import type {ServerList, ServerResult} from '../../../DBType' 
 import { list } from '../../../DBType' 
 const RightSide = () => {
 
@@ -25,6 +25,18 @@ const RightSide = () => {
       );
       return response;
   }
+
+  const getResult = async () => {
+    setError("");
+
+    const year = new Date().getFullYear();
+    const response = await axios.get<ServerResult[]>(
+      'http://10.240.60.92:3301/api/server_info_result/2023/23'
+    );
+
+    return response;
+  }
+
   useEffect(() => {
     getDatas().then(res => setServerList(res.data));
   }, [])
