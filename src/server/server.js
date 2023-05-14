@@ -80,6 +80,20 @@ app.get("/api/server_info_result", (req, res) => {
     })
 })
 
+// 특정 IP의 최근 결과 값 파싱
+app.get("/api/server_info_result/:IP", (req, res) => {
+    const ip = req.params.IP;
+
+    res.header("Access-Control-Allow-Origin", "*");
+    console.log("get data");
+    const sqlQuery = "SELECT * FROM server_status.server_status_result a join server_status.server_status_result b on (a.IP = b.IP)" + 
+    "where a.`IP`='" + ip + "' a.Week = (SELECT MAX(b.Week) from server_status.server_status_result b) and " + 
+    "a.Year = (SELECT MAX(b.Year) from server_status.server_status_result b)" ;
+    db.query(sqlQuery, (err, result, fields) =>{
+        res.send(result);
+    })
+})
+
 app.get("/data", (req, res) => {
     res.send('GET request to the homepage');
 })
