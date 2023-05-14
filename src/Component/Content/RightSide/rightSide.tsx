@@ -39,7 +39,7 @@ const RightSide = () => {
   }
 
   useEffect(() => {
-    getDatas().then(res => setServerList(res.data));
+    getResult().then(res => setTestResult(res.data));
     //getResult().then(res => setTestResult(res.data));
   }, [])
 
@@ -52,7 +52,7 @@ const RightSide = () => {
           <div className={`${value === "Dashboard" ? "" : "disable"}`}><ChartDashboard/></div>
           <div className={`${value !== "Dashboard" ? value : "disable"}`}><ChartServers chartCategoryName={value}/></div>
           {/* 여기에 각 카테리별 서버 개수 집어넣어야 함.*/}
-          <div><ServerInfo server={value} serverCount={serverlist}/></div>
+          <div><ServerInfo server={value} serverCount={testResult}/></div>
           {/* <ServerStatus/> */}
         </div>  
       )}

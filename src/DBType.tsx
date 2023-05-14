@@ -17,6 +17,7 @@ export type ServerResult = {
     CPU_Temp: number,
     VNFD:string,
     GPS:string
+    server_name: string,
 }
 
 export const list: ServerList[] = [{
@@ -38,5 +39,6 @@ export const serverResult: ServerResult[] = [{
     CPU_Temp: 0,
     VNFD:"",
     GPS:"",
+    server_name: "",
 }]
 

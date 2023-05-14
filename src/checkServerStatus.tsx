@@ -1,28 +1,30 @@
 import {ServerResult} from './DBType'
 
 export type CheckStatus = {
-    result: string,
+    result: number,
     reason: string[],
 }
 
 
-export const checkServerStatus = (serverStatus: ServerResult) =>{
+export const checkServerStatus = (serverStatus: ServerResult) => {
+    let check: number = 0;
+    let checking: CheckStatus = {
+        result: 0,
+        reason: [],
+    };
 
-    let result: string = 'GOOD';
-    if(serverStatus.CPU_Temp > 0.9) { }
-    if(serverStatus.CPU_Temp > 0.9 && serverStatus.CPU_Temp <= 0.9) { }
-    if(serverStatus.CPU_Temp <= 0.7) { }
-    if(serverStatus.CPU_Usage > 0.9) { }
-    if(serverStatus.CPU_Usage > 0.9 && serverStatus.CPU_Usage <= 0.9) { }
-    if(serverStatus.CPU_Usage <= 0.7) { }
-    if(serverStatus.Disk_Usage > 0.9) { }
-    if(serverStatus.Disk_Usage > 0.9 && serverStatus.Disk_Usage <= 0.9) { }
-    if(serverStatus.Disk_Usage <= 0.7) { }
-    if(serverStatus.Memory_Usage > 0.9) { }
-    if(serverStatus.Memory_Usage > 0.9 && serverStatus.Memory_Usage <= 0.9) { }
-    if(serverStatus.Memory_Usage <= 0.7) { }
-    if(serverStatus.GPS === "bad") { }
-    if(serverStatus.VNFD === "bad") { }
+    if(serverStatus.CPU_Temp > 0.9) { check < 2 ? 2 : check; checking.reason.push("CPU Temp is too high")}
+    if(serverStatus.CPU_Usage > 0.9) { check < 2 ? 2 : check; checking.reason.push("CPU Usage is too a lot")}
+    if(serverStatus.Disk_Usage > 0.9) { check < 2 ? 2 : check; checking.reason.push("Disk Usage is too a lot")}
+    if(serverStatus.Memory_Usage > 0.9) { check < 2 ? 2 : check; checking.reason.push("Memory Usage is too a lot")}
+    if(serverStatus.GPS === "bad") { check < 2 ? 2 : check; checking.reason.push("vDU GPS stats is wrong") }
+    if(serverStatus.VNFD === "bad") { check < 2 ? 2 : check; checking.reason.push("vDU VNFD state is wrong")}
+    if(serverStatus.CPU_Temp > 0.8 && serverStatus.CPU_Temp <= 0.9) { check < 1 ? 1 : check; checking.reason.push("CPU Temp is high")}
+    if(serverStatus.CPU_Usage > 0.8 && serverStatus.CPU_Usage <= 0.9) { check < 1 ? 1 : check; checking.reason.push("CPU Usage is a lot")}
+    if(serverStatus.Disk_Usage > 0.8 && serverStatus.Disk_Usage <= 0.9) { check < 1 ? 1 : check; checking.reason.push("Disk Usage is a lot")}
+    if(serverStatus.Memory_Usage > 0.8 && serverStatus.Memory_Usage <= 0.9) { check < 1 ? 1 : check; checking.reason.push("Memory Usage is a lot")}
 
-    return result;
+    checking.result = check;
+
+    return checking;
 }
