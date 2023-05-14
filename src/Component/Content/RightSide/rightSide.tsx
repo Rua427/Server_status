@@ -9,11 +9,12 @@ import SideSelection from '../../../Context'
 import axios from 'axios';
 import { json } from 'stream/consumers'
 import type {ServerList, ServerResult} from '../../../DBType' 
-import { list } from '../../../DBType' 
+import { list, serverResult } from '../../../DBType' 
 const RightSide = () => {
 
   // data 배열 인덱싱으로 mysql table내 column을 이용
   const [serverlist, setServerList] = useState<ServerList[]>(list);
+  const [testResult, setTestResult] = useState<ServerResult[]>(serverResult)
   const [error, setError] = useState<any>(null);
   
   const getDatas = async () =>{
@@ -29,9 +30,9 @@ const RightSide = () => {
   const getResult = async () => {
     setError("");
 
-    const year = new Date().getFullYear();
+    // 전체 결과 가져옴 (최근 결과 값)
     const response = await axios.get<ServerResult[]>(
-      'http://10.240.60.92:3301/api/server_info_result/2023/23'
+      'http://10.240.60.92:3301/api/server_info_result'
     );
 
     return response;
@@ -39,6 +40,7 @@ const RightSide = () => {
 
   useEffect(() => {
     getDatas().then(res => setServerList(res.data));
+    //getResult().then(res => setTestResult(res.data));
   }, [])
 
 

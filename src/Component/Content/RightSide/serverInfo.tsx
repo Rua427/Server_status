@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import Server from './server';
 import {Tooltip} from 'react-tooltip'
+import axios from 'axios';
 import './serverInfo.css'
 import 'react-tooltip/dist/react-tooltip.css';
-import type {ServerList } from '../../../DBType' 
+import type {ServerList, ServerResult } from '../../../DBType' 
 
 interface Props{
   serverCount: ServerList[]; 
@@ -11,11 +12,26 @@ interface Props{
 }
 
 
+
 // 여기에서 서버 정보 결과를 넣어준다.
 const ServerInfo = (props: Props) => {
     let s: any = [];
 
     const [serverData, setServer] = useState<Props>();
+    const [error, setError] = useState<any>(null);
+
+
+
+    const getResult = async (ip: string) => {
+      setError("");
+    
+      // 전체 결과 가져옴 (최근 결과 값)
+      const response = await axios.get<ServerResult>(
+        `http://10.240.60.92:3301/api/server_info_result/${ip}`
+      );
+      
+      return response;
+    }
 
     useEffect(() => {
       setServer(props);
@@ -24,6 +40,11 @@ const ServerInfo = (props: Props) => {
     if(props.server === "Dashboard" && serverData !== undefined){
       var serverCount = 0;
       props.serverCount.map((res) => {
+
+        let status: ServerResult;
+        getResult(res.IP).then(r => status = r.data);
+
+        
         const r = Math.floor(Math.random() * 100);
         let num = 0;
         if(r >= 99){
