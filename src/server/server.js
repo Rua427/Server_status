@@ -59,9 +59,10 @@ app.get("/api/server_info_result/:category/", (req, res) => {
 
     res.header("Access-Control-Allow-Origin", "*");
     console.log("get data");
-    const sqlQuery = "SELECT * FROM server_status.server_status_result a join server_status.server_status_result b on (a.IP = b.IP)" + 
-    "where a.`server_category`='" + category + "' and a.Week = (SELECT MAX(b.Week) from server_status.server_status_result b) and " + 
-    "a.Year = (SELECT MAX(b.Year) from server_status.server_status_result b)" ;
+    const sqlQuery =    "select a.*, b.server_name from server_status.server_status_result a" +
+                        `left join server_status.server_info b on (a.IP = b.IP ) where a.\`server_category\`= '${category}'` + 
+                        "and a.Week = (SELECT MAX(Week) from server_status.server_status_result)" + 
+                        "and a.Year = (SELECT MAX(Year) from server_status.server_status_result);"
     db.query(sqlQuery, (err, result, fields) =>{
         res.send(result);
     })
@@ -72,9 +73,10 @@ app.get("/api/server_info_result", (req, res) => {
 
     res.header("Access-Control-Allow-Origin", "*");
     console.log("get data");
-    const sqlQuery = "SELECT * FROM server_status.server_status_result a join server_status.server_status_result b on (a.IP = b.IP)" + 
-    "where a.Week = (SELECT MAX(b.Week) from server_status.server_status_result b) and " + 
-    "a.Year = (SELECT MAX(b.Year) from server_status.server_status_result b)" ;
+    const sqlQuery =    "select a.*, b.server_name from server_status.server_status_result a" +
+                        "left join server_status.server_info b on (a.IP = b.IP )" +
+                        "where a.Week = (SELECT MAX(Week) from server_status.server_status_result)" + 
+                        "and a.Year = (SELECT MAX(Year) from server_status.server_status_result);"
     db.query(sqlQuery, (err, result, fields) =>{
         res.send(result);
     })
@@ -86,9 +88,10 @@ app.get("/api/server_info_result/:IP", (req, res) => {
 
     res.header("Access-Control-Allow-Origin", "*");
     console.log("get data");
-    const sqlQuery = "SELECT * FROM server_status.server_status_result a join server_status.server_status_result b on (a.IP = b.IP)" + 
-    "where a.`IP`='" + ip + "' a.Week = (SELECT MAX(b.Week) from server_status.server_status_result b) and " + 
-    "a.Year = (SELECT MAX(b.Year) from server_status.server_status_result b)" ;
+    const sqlQuery =    "select a.*, b.server_name from server_status.server_status_result a" +
+                        `left join server_status.server_info b on (a.IP = b.IP ) where a.\`IP\`= '${ip}'` + 
+                        "and a.Week = (SELECT MAX(Week) from server_status.server_status_result)" + 
+                        "and a.Year = (SELECT MAX(Year) from server_status.server_status_result);"
     db.query(sqlQuery, (err, result, fields) =>{
         res.send(result);
     })
