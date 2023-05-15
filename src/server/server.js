@@ -7,7 +7,7 @@ const port = 3306;
 const db = mysql. createConnection({
     host:"192.168.0.105",
     user:"cdma",
-    password:"dl022548",
+    password:"",
     database:"server_status",
 });
 
