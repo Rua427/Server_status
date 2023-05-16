@@ -30,9 +30,10 @@ db.connect(function(err){
 app.get("/api/data", (req, res) => {
 
      res.header("Access-Control-Allow-Origin", "*");
-     console.log("get data");
      const sqlQuery = "SELECT * FROM server_status.server_info";
      db.query(sqlQuery, (err, result, fields) =>{
+        if(err !== null)
+            console.log(err);
          res.send(result);
      })
 })
@@ -44,9 +45,10 @@ app.get("/api/server_info_result/:category/:year/:week", (req, res) => {
     const week = req.params.week;
 
     res.header("Access-Control-Allow-Origin", "*");
-    console.log("get data");
     const sqlQuery = "SELECT * FROM server_status.server_status_result where `server_category`='" + category + "' and `Year`='" + year + "' and `Week`='" + week + "'";
     db.query(sqlQuery, (err, result, fields) =>{
+        if(err !== null)
+            console.log(err);
         res.send(result);
     })
 })
@@ -58,12 +60,13 @@ app.get("/api/server_info_result/:category/", (req, res) => {
     const week = req.params.week;
 
     res.header("Access-Control-Allow-Origin", "*");
-    console.log("get data");
-    const sqlQuery =    "select a.*, b.server_name from server_status.server_status_result a" +
+    const sqlQuery =    "select a.*, b.server_name from server_status.server_status_result a " +
                         `left join server_status.server_info b on (a.IP = b.IP ) where a.\`server_category\`= '${category}'` + 
                         "and a.Week = (SELECT MAX(Week) from server_status.server_status_result)" + 
                         "and a.Year = (SELECT MAX(Year) from server_status.server_status_result);"
     db.query(sqlQuery, (err, result, fields) =>{
+        if(err !== null)
+            console.log(err);
         res.send(result);
     })
 })
@@ -73,11 +76,13 @@ app.get("/api/server_info_result", (req, res) => {
 
     res.header("Access-Control-Allow-Origin", "*");
     console.log("get data");
-    const sqlQuery =    "select a.*, b.server_name from server_status.server_status_result a" +
-                        "left join server_status.server_info b on (a.IP = b.IP )" +
-                        "where a.Week = (SELECT MAX(Week) from server_status.server_status_result)" + 
+    const sqlQuery =    "select a.*, b.server_name from server_status.server_status_result a " +
+                        "left join server_status.server_info b on (a.IP = b.IP ) " +
+                        "where a.Week = (SELECT MAX(Week) from server_status.server_status_result) " + 
                         "and a.Year = (SELECT MAX(Year) from server_status.server_status_result);"
     db.query(sqlQuery, (err, result, fields) =>{
+        if(err !== null)
+            console.log(err);
         res.send(result);
     })
 })
@@ -87,12 +92,13 @@ app.get("/api/server_info_result/:IP", (req, res) => {
     const ip = req.params.IP;
 
     res.header("Access-Control-Allow-Origin", "*");
-    console.log("get data");
-    const sqlQuery =    "select a.*, b.server_name from server_status.server_status_result a" +
+    const sqlQuery =    "select a.*, b.server_name from server_status.server_status_result a " +
                         `left join server_status.server_info b on (a.IP = b.IP ) where a.\`IP\`= '${ip}'` + 
                         "and a.Week = (SELECT MAX(Week) from server_status.server_status_result)" + 
                         "and a.Year = (SELECT MAX(Year) from server_status.server_status_result);"
     db.query(sqlQuery, (err, result, fields) =>{
+        if(err !== null)
+            console.log(err);
         res.send(result);
     })
 })
@@ -104,3 +110,4 @@ app.get("/data", (req, res) => {
 app.listen(port, () => {
     console.log(`server running on port ${port}`);
 })
+
