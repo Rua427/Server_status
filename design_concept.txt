@@ -41,3 +41,9 @@ hover
     3. 현재 상태를 출력한다.
         1. Good, Warning, Bad, disconnect
         2. Good이외에는 해당 항목의 대한 사유를 적는다.
+
+
+shell script로 각 서버 접속 후 데이터 파싱, 파싱한 데이터를 기반으로 서버 상태 계산
+그 후 DB에 서버 상태 결과값 전송
+위 shell script는 일정시간마다 계산을 해야함.
+
