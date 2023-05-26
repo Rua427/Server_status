@@ -18,6 +18,11 @@ export const checkServerStatus = (serverStatus: ServerResult) => {
         reason: [],
     };
 
+    if(serverStatus.Connect == false) {
+        checking.reason.push("Disconnect");
+        checking.result = 3;
+        return checking; 
+    }
     if(serverStatus.CPU_Temp > 90) { check = check < 2 ? 2 : check; checking.reason.push("CPU Temp is too high"); }
     if(serverStatus.CPU_Usage > 0.9) { check = check < 2 ? 2 : check; checking.reason.push("CPU Usage is too a lot"); }
     if(serverStatus.Disk_Usage > 0.9) { check = check < 2 ? 2 : check; checking.reason.push("Disk Usage is too a lot"); }
@@ -44,6 +49,7 @@ export const checkEachServerStatus = (serverStatus: ServerResult[], category: st
     serverStatus.map((res) => {
         check = 0;
         if(category === res.server_category){
+            if(res.Connect == false) { checking.disconnect++; return; }
             if(res.CPU_Temp > 90) { check = check < 2 ? 2 : check; }
             if(res.CPU_Usage > 0.9) { check = check < 2 ? 2 : check; }
             if(res.Disk_Usage > 0.9) { check = check < 2 ? 2 : check;  }
@@ -81,6 +87,11 @@ export const checkServerEachItemStatus = (serverStatus: ServerResult[], category
     };
     serverStatus.map((res) => {
         if(category === res.server_category){
+            if(res.Connect == false){
+                checking.disconnect++;
+                return;
+            }
+
             if(item === "CPU_Temp") {
                 if(res.CPU_Temp > 90) { check = check < 2 ? 2 : check; checking.bad++}
                 else if(res.CPU_Temp > 80 && res.CPU_Temp <= 90) { check = check < 1 ? 1 : check; checking.warning++; }
