@@ -14,7 +14,7 @@ const RightSide = () => {
       {value => (
         <div className='rightSide'>
             <ServerHeader/>
-            <div className={`${value === "Dashboard" ? "" : "disable"}`}><ChartDashboard enable={value}/></div>
+            <div className={`${value === "Dashboard" ? value : "disable"}`}><ChartDashboard enable={value}/></div>
             <div className={`${value !== "Dashboard" ? value : "disable"}`}><ChartServers chartCategoryName={value}/></div>
             {/* 여기에 각 카테리별 서버 개수 집어넣어야 함.*/}
             <div><ServerInfo server={value}/></div>
