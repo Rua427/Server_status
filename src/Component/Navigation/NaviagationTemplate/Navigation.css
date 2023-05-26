@@ -75,3 +75,16 @@
     font-size:13px;
     padding-bottom:20px;
 }
+
+.navigation .categoryList{
+
+    flex:1
+}
+
+.navigation>p{
+    font-size: 13px;
+    color:rgb(139, 139, 139);
+    display: flex;
+    align-items:center;
+    flex-direction: column;
+}
