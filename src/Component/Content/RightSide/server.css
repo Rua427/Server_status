@@ -32,3 +32,9 @@
     box-shadow:0px 0px 13px 2px lightcoral;
     background-color: lightcoral;
 }
+.serverStat.disconnect{
+    box-shadow:0px 0px 13px 1px gray;
+    background-color: gray;
+}
+
+
