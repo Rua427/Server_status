@@ -33,7 +33,7 @@ for ((i=0; i<$server_length; i++)) do
     VNFD_STATUS='NONE'
 
     #Disk 사용율 계산
-    DISK_USAGE=`timeout 5 /root/Server/Server_Status/GetDiskUsage.exp ${ip[$i]} ${id[$i]} ${pw[$i]} | sed -n '/pass/,$p' | grep -v pass | awk 'END { print $5 }' | awk 'sub(/\015/,"");'`
+    DISK_USAGE=`/root/Server/Server_Status/GetDiskUsage.exp ${ip[$i]} ${id[$i]} ${pw[$i]} | sed -n '/pass/,$p' | grep -v pass | awk 'END { print $5 }' | awk 'sub(/\015/,"");'`
 
     if [ "$DISK_USAGE" = "Ter" ]; then
         DISK_USAGE='0'

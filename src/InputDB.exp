@@ -8,14 +8,14 @@ spawn ssh [lindex $argv 1]@[lindex $argv 0] "vmstat"
 
 set timeout 2
 expect {
-    "yes/no" {
+    -nocase  "yes/no" {
         send "yes\n"
         exp_continue 2
     }
-    "*?password:" {
+    -nocase "*?password:" {
         send "[lindex $argv 2]\n"
     }  
     timeout { exit 0 }
 
 }
-interact
+expect eof

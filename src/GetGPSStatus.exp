@@ -7,13 +7,13 @@
 spawn ssh [lindex $argv 1]@[lindex $argv 0] "cp /etc/kubernetes/admin.conf ~/.kube/config; source /etc/platform/openrc; fm alarm-list"
 set timeout 3
 expect {
-    "yes/no" {
+    -nocase "yes/no" {
         send "yes\n"
         exp_continue 2
     }
-    "pass" {
+    -nocase "pass" {
         send "[lindex $argv 2]\n"
     } 
     timeout { exit 0 }
 }
-interact
+expect eof
