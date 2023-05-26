@@ -9,57 +9,61 @@ server_category=(`mysql -u cdma -e "select server_category from server_status.se
 # 서버 길이를 저장
 server_length=${#ip[@]};
 
-for (i=0; i<${server_length}; i++); do
-    rm -rf /root/.ssh/known_hosts
+input_DB(){
+    
+    year=`date +%Y`
+    week=`date +%W`
+    mon=`date +%m`
+    day=`date +%d`
+
+    t=`date +%T`
+        mysql -u root -pmegaroot -e "insert into \`server_status\`.\`server_status_result\` (IP, server_category, Year, Week, CPU_Usage, Memory_Usage, Disk_Usage, CPU_Temp, VNFD, GPS, Connect, Update_Time)
+                    values('$1', '$2', $year, $week, $3, $4, $5/100.0, $6, '$7', '$8', $9, '$year-$mon-$day $t')
+                    on duplicate key update CPU_Usage=$3, Memory_Usage=$4, Disk_Usage=$5/100.0, CPU_Temp=$6, VNFD='$7', GPS='$8', Connect=$9, Update_Time='$year-$mon-$day $t'"
+    unset year
+    unset week
+}
+
+for ((i=0; i<$server_length; i++)) do
+    DISK_USAGE='0'
+    CPU_USAGE='0'
+    MEM_USAGE='0'
+    CPU_TEMP='0'
+    GPS_STATUS='NONE'
+    VNFD_STATUS='NONE'
 
     #Disk 사용율 계산
-    DISK_USAGE=`ssh ${id[$i]}@${ip[$i]} "df | grep -v Used | sort -rnsk 5 | head -1 | awk '{ print \$5 }' | cut -d '%' -f1"`
-    sleep 0.25
-    yes
-    sleep 0.25
-    ${pw[$i]}
+    DISK_USAGE=`timeout 5 /root/Server/Server_Status/GetDiskUsage.exp ${ip[$i]} ${id[$i]} ${pw[$i]} | sed -n '/pass/,$p' | grep -v pass | awk 'END { print $5 }' | awk 'sub(/\015/,"");'`
 
+    if [ "$DISK_USAGE" = "Ter" ]; then
+        DISK_USAGE='0'
+        input_DB ${ip[$i]} ${server_category[$i]} ${CPU_USAGE} ${MEM_USAGE} ${DISK_USAGE} ${CPU_TEMP} ${VNFD_STATUS} ${GPS_STATUS} '0'
+        continue
+    fi
+
+    if [ ! -n "$DISK_USAGE"  ]; then
+        DISK_USAGE='0'
+        input_DB ${ip[$i]} ${server_category[$i]} ${CPU_USAGE} ${MEM_USAGE} ${DISK_USAGE} ${CPU_TEMP} ${VNFD_STATUS} ${GPS_STATUS} '0'
+        continue
+    fi
 
     # Memory 사용률 계산
-    mem=`ssh ${id[$i]}@${ip[$i]} "cat /proc/meminfo"`
-    expect {
-        "yes/no"{
-            send "yes\n"
-            exp_continue
-        }
-        "password:"{
-            send "${pw[$i]}\n"
-        }   
-    }
-    memTotal=`awk '$1 == "MemTotal" { print $2}'`
-    swapTotal=`awk '$1 == "SwapTotal" { print $2}'`
-    memFree=`awk '$1 == "MemFree" { print $2}'`
-    swapFree=`awk '$1 == "SwapFree" { print $2}'`
-    memCache=`awk '$1 == "Cached" { print $2}'`
-    swapCache=`awk '$1 == "SwapCached" { print $2}'`
-    buffer=`awk '$1 == "Buffers" { print $2}'`
+    useMem=`/root/Server/Server_Status/GetMemoryUsage.exp ${ip[$i]} ${id[$i]} ${pw[$i]} | sed -n '/pass/,$p' | grep -v pass | awk '$1 == "MemFree:" || $1 == "SwapFree:" || $1 == "Cached:" || $1 == "SwapCached" || $1 == "Buffers" { sum += $2 } END { print sum }'`
+    totalMem=`/root/Server/Server_Status/GetMemoryUsage.exp ${ip[$i]} ${id[$i]} ${pw[$i]} | sed -n '/pass/,$p' | grep -v pass | awk '$1 == "MemTotal:" || $1 == "SwapTotal:"{ sum += $2 } END { print sum }'`
+    
+    MEM_USAGE=`echo "scale=2; 1 - ($useMem) / ($totalMem)" | bc -l`
 
-    MEM_USAGE=`echo "scale=2; 1 - ($buffer + $memFree + $swapFree + $memCache + $swapCache) / ($memTotal + $swapTotal)" | bc -l`
-
+    unset useMEM
+    unset totalMem
     #CPU 온도 계산
-    command=("cat /sys/class/thermal/thermal_zone*/temp | sed 's/\(.\)..$//'"
-             "cat /sys/class/hwmon/hwmon*/temp*_input | sed 's/\(.\)..$//'"
-             "cat /sys/class/hwmon/hwmon*/device/temp*_input | sed 's/\(.\)..$//'");
+    command=("cat /sys/class/thermal/thermal_zone*/temp"
+             "cat /sys/class/hwmon/hwmon*/temp*_input"
+             "cat /sys/class/hwmon/hwmon*/device/temp_input");
 
     CPU_TEMP='0'
 
-    for(c=0; c<${#command[@]}; c++) do
-        temp_res=(`ssh ${id[$i]}@${ip[$i]} "$command | sort -rnsk 5 | head -1 | awk '{ print $1 }'"`)
-        expect {
-            "yes/no"{
-                send "yes\n"
-                exp_continue
-            }
-            "password:"{
-                send "${pw[$i]}\n"
-            }   
-        }
-
+    for((c=0; c<${#command[@]}; c++)) do
+        temp_res=(`/root/Server/Server_Status/GetCPUTEMP.exp ${ip[$i]} ${id[$i]} ${pw[$i]} "${command[c]}" | sed -n '/pass/,$p' | grep -v pass | sed 's/\(.\)...$//' | sort -rnsk 1 | head -1 | awk 'sub(/\015/,"");'`)
         # 값이 있으면 true를 반환
         if [ -n "$temp_res" ]; then
             CPU_TEMP=$temp_res;
@@ -67,77 +71,34 @@ for (i=0; i<${server_length}; i++); do
         fi
     done
 
+    unset temp_res
     #CPU 사용률 계산
-    CPU_USAGE=`ssh ${id[$i]}@${ip[$i]} "vmstat | awk '{sum += $15} END { print 100-(sum/(NR-2)) }'"`
-    expect {
-        "yes/no"{
-            send "yes\n"
-            exp_continue
-        }
-        "password:"{
-            send "${pw[$i]}\n"
-        }   
-    }
-
-    VNFD_STATUS=''
-    GPS_STATUS=''
+    CPU_USAGE=`/root/Server/Server_Status/GetCPUUsage.exp ${ip[$i]} ${id[$i]} ${pw[$i]} | sed -n '/pass/,$p' | grep -v pass | awk '{sum += $15} END { print ((100-(sum/(NR-2)))*0.01) }'`
 
     #VNFD 상태 확인
     if [ ${server_category[$i]} = "vDU" ]; then
-        spawn env LANG=C ssh ${id[$i]}@${ip[$i]}
-        expect {
-            "yes/no"{
-                send "yes\n"
-                exp_continue
-            }
-            "password:"{
-                send "${pw[$i]}\n"
-            }   
-        }
-
-        expect {
-            "controller"{
-                send "cp /etc/kubernetes/admin.conf ~/.kube/config"
-            }
-        }
-
-        cp /etc/kubernetes/admin.conf ~/.kube/config
-        vnfd=(`ssh ${id[$i]}@${ip[$i]} "kubectl get pods | awk '$3 != "Running" { print "Fail" }'"`)
-        if [ -n "${vnfd}" ]; then
+        vnfd=(`/root/Server/Server_Status/GetVNFDStatus.exp ${ip[$i]} ${id[$i]} ${pw[$i]} | sed -n '/pass/,$p' | grep -v pass | awk '/adpf/' | awk '$3 != "Running" { print "Fail" }'`)
+        # 정상이면 값이 없어야함
+        if [ -n "${vnfd[@]}" ]; then
             VNFD_STATUS='GOOD'
         else
-            VNFD_STATUS='Fail'
+            VNFD_STATUS='FAIL'
+        fi
     fi
 
     #GPS 상태 확인
     if [ ${server_category[$i]} = "vDU" ]; then
-        spawn env LANG=C ssh ${id[$i]}@${ip[$i]}
-        expect {
-            "yes/no"{
-                send "yes\n"
-                exp_continue
-            }
-            "password:"{
-                send "${pw[$i]}\n"
-            }   
-        }
-
-        expect {
-            "controller"{
-                send "cp /etc/kubernetes/admin.conf ~/.kube/config\r"
-            }
-        }
+        gps=`/root/Server/Server_Status/GetVNFDStatus.exp ${ip[$i]} ${id[$i]} ${pw[$i]} | sed -n '/pass/,$p' | grep -v pass | awk '{if ( index($0, "PPS")!=0 || index($0, "GNSS")!=0 ) print $0 }'`
         
-        expect {
-            "controller"{
-                send "source /etc/platform/openrc\r"
-            }
-        }
-        
-        if [ -n "${vnfd}" ]; then
-            VNFD_STATUS='GOOD'
+        if [ -n "${gps}" ]; then
+            GPS_STATUS='GOOD'
         else
-            VNFD_STATUS='Fail'
+            GPS_STATUS='FAIL'
+        fi
     fi
+
+    input_DB ${ip[$i]} ${server_category[$i]} ${CPU_USAGE} ${MEM_USAGE} ${DISK_USAGE} ${CPU_TEMP} ${VNFD_STATUS} ${GPS_STATUS} '1'
+
+    unset DISK_USAGE
 
 done
