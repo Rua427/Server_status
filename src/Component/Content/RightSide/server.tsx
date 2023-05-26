@@ -12,6 +12,7 @@ const Server = ({status}: props) => {
     status === 0 && "good",
     status === 1 && "warning",
     status === 2 && "bad",
+    status === 3 && "disconnect",
   ].filter(Boolean).join(' ');
   return (
     <div className='server'>
