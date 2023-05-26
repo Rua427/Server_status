@@ -17,7 +17,14 @@ export type ServerResult = {
     CPU_Temp: number,
     VNFD:string,
     GPS:string
+    Connect:boolean,
+    Update_Time:string,
     server_name: string,
+
+}
+
+export type LastUpdate = {
+    t: string
 }
 
 export const list: ServerList[] = [{
@@ -39,6 +46,12 @@ export const serverResult: ServerResult[] = [{
     CPU_Temp: 0,
     VNFD:"",
     GPS:"",
+    Connect:false,
+    Update_Time:"",
     server_name: "",
 }]
 
+
+export const lastUpdate: LastUpdate[] =[{
+    t : ""
+}]
