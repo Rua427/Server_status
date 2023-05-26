@@ -1,0 +1,19 @@
+#! /usr/bin/expect
+
+
+#<host> <ssh user> <ssh pw> <command>
+
+
+spawn ssh [lindex $argv 1]@[lindex $argv 0] "cp /etc/kubernetes/admin.conf ~/.kube/config; source /etc/platform/openrc; fm alarm-list"
+set timeout 3
+expect {
+    "yes/no" {
+        send "yes\n"
+        exp_continue 2
+    }
+    "pass" {
+        send "[lindex $argv 2]\n"
+    } 
+    timeout { exit 0 }
+}
+interact
