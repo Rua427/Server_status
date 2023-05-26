@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useEffect, useState } from 'react'
 import ChartTemplate from '../chartTemplate'
 import './chartDashboard.css'
 import axios from 'axios';
@@ -6,11 +6,11 @@ import { ServerResult } from '../../../../../DBType';
 import { list, serverResult } from '../../../../../DBType' 
 import { checkEachServerStatus } from '../../../../../checkServerStatus' 
 
-interface props{
+interface Props{
   enable: string
 }
 // 여기서 각 서버별 상태 개수를 api를 통해 가져온다.
-const ChartDashboard = () => {
+const ChartDashboard = (props: Props) => {
   const [error, setError] = useState<any>(null);
   const [testResult, setTestResult] = useState<ServerResult[]>(serverResult)
 
