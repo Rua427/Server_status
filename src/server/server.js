@@ -9,6 +9,7 @@ const db = mysql. createConnection({
     user:"cdma",
     password:"",
     database:"server_status",
+    dateStrings: 'date,
 });
 
 app.use(cors({
