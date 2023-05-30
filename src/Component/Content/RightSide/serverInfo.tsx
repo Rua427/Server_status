@@ -7,6 +7,7 @@ import type {ServerList, ServerResult } from '../../../DBType'
 import { checkServerStatus } from '../../../checkServerStatus' 
 import axios from 'axios';
 import { list, serverResult } from '../../../DBType' 
+import useInterval from 'use-interval'
 
 interface ServerData{
   server : string;
@@ -45,7 +46,12 @@ const ServerInfo = (props: ServerData ) => {
       //getResult().then(res => setTestResult(res.data));
     }, [props.server])
   
+    useInterval(()=>{
+      getResult(props.server).then(res => setTestResult(res.data));
+      setCount(count => count+1)
 
+      //5분마다 업데이트
+    }, 300000)
     // useEffect(() => {
     //   setServer({server: props.server, serverCount: props.serverCount});
     // }, [serverData])
