@@ -16,6 +16,7 @@ const ChartServers = (props: props) => {
 
     const [error, setError] = useState<any>(null);
     const [testResult, setTestResult] = useState<ServerResult[]>(serverResult)
+    const [count, setCount] =  useState<number>(0);
 
     const getResult = async () => {
         setError("");
