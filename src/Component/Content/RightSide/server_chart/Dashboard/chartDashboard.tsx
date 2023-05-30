@@ -5,6 +5,7 @@ import axios from 'axios';
 import { ServerResult } from '../../../../../DBType';
 import { list, serverResult } from '../../../../../DBType' 
 import { checkEachServerStatus } from '../../../../../checkServerStatus' 
+import { useInterval } from 'use-interval'
 
 interface Props{
   enable: string
@@ -13,6 +14,7 @@ interface Props{
 const ChartDashboard = (props: Props) => {
   const [error, setError] = useState<any>(null);
   const [testResult, setTestResult] = useState<ServerResult[]>(serverResult)
+  const [count, setCount] =  useState<number>(0);
 
   const getResult = async () => {
     setError("");
@@ -25,11 +27,15 @@ const ChartDashboard = (props: Props) => {
     return response;
   }
 
-useEffect(() => {
-  getResult().then(res => setTestResult(res.data));
-  //getResult().then(res => setTestResult(res.data));
-}, [props.enable])
-
+  useEffect(() => {
+    getResult().then(res => setTestResult(res.data));
+    //getResult().then(res => setTestResult(res.data));
+  }, [props.enable])
+  useInterval(() => {
+    getResult().then(res => setTestResult(res.data));
+    setCount(count => count + 1)
+  }, 300000)
+   
 
   const createChartData = (name: string) => {
     
